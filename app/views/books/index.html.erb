@@ -1,2 +1,16 @@
-<h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<%= render 'post_image/user', post_images: @post_images%>
+<h1>Books</h1>
+<!--投稿一覧(各ユーザーの画像・本のタイトル・感想)-->
+<% @books.each do |book|%>
+<div>
+    <%= link_to post_image_path(post_image.id) do %>
+        <%= image_tag psot.get_iamge %>
+    <% end %>
+    <p>User image: <%= image_tag psot_user.user.get_profile_image(100, 100)%></p>
+    <p>Title: <%= psot_image.book_name %></p>
+    <p>Opinion: <%= post_image.caption %> </p>
+    
+    <% end %>
+
+</div>
+

@@ -1,2 +1,15 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<%= render 'post_iamge/user', post_images: @post_images%>
+<!--Bookの詳細画面(ユーザー画像・名前・本のタイトル[リンク付き]・感想)-->
+<div>
+  <%= image_tag @post_image.get_image%>
+  <p>User image: <%= image_tag @post_image.user.get_profile_image(100, 100)%></p>
+  <p>User name: <%= @post_iamge %></p>
+  <p>Title: <%= @post_iamge.book %></p>
+  <p>Opinion: <%= @post_iamge.caption %></p>
+  
+  <!--現在ログインしているユーザーと同じである場合の-->
+  <% if @post_image.user == current_user %>
+    <%= link_to "Edit", edit_book_path(@post_image), class: "edit-link" %>
+    <%= link_to "Destroy", post_image_path(@post_image), method: :delete%>
+  <% end %>
+</div>
