@@ -1,5 +1,16 @@
+<% if @book_id.errors.any? %>
+  <%= @book_id.errors.count %>errors prohibited this obj from being saved:
+  <ul>
+    <% @book_id.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 <%= render 'post_image/user', user: current_user, book: Book.new %>
+
+
 <!--Bookの詳細画面(ユーザー画像・名前・本のタイトル[リンク付き]・感想)-->
+<h4>Books</h4>
 <div>
   <p>User image: <%= image_tag @book.user.get_profile_image(100, 100)%></p>
   <p>User name: <%= @book.user.name %></p>

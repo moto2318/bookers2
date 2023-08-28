@@ -1,14 +1,45 @@
-<%= render 'post_image/user', user: current_user, book: Book.new %>
   <!--#Usersの詳細（ユーザーが投稿したもの一覧・本のタイトル[リンク付き]・説明）。-->
 <!-- ユーザーの投稿一覧 -->
+<div class= "container px-5 px-sm-0">
+  <div class = "row">
+    
+  
+  
 
-<div>
-  <p>投稿ユーザー画像：<%= image_tag @user.get_profile_image(100,100) %></p>
-  <p>Title：<%= @user.name %></p>
-  <p>Opinion：<%= @user.introduction %></p>
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>errors prohibited this obj from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+<div class = "col-md-3">
+
+<%= render 'post_image/user', user: current_user, book: Book.new %>
 </div>
 
-<!--Boostrapのレイアウト（２３章）-->
-<!--<table class="tabel tabel-striped">-->
-  
-<!--</table>-->
+
+<div class = "col-md-8 offset-md-1">
+<h1>Books</h1>
+<!--投稿一覧(各ユーザーの画像・本のタイトル・感想)-->
+<% @books.each do |book|%>
+<table>
+  <p>投稿ユーザー画像：<%= image_tag book.user.get_profile_image(100, 100) %></p>
+  <tr>
+    <th>Title</th>
+    <th>Opinion</th>
+  </tr>
+  <tr>
+  <td><%= link_to book_path(book.id) do %>
+    <%= book.title %>
+    <% end %></td>
+  <td><%= book.body %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+
+  </div>
+</div>
+
