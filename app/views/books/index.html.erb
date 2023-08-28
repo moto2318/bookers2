@@ -1,12 +1,25 @@
+<!--エラーメッセージ-->
+<% if @post_image.errors.any? %>
+  <%= @post_image.errors.count %>errors prohibited this obj from being saved:
+  <ul>
+    <% @post_image.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<!--共有テンプレート-->
 <%= render 'post_image/user', post_images: @post_images%>
 <h1>Books</h1>
+
+
 <!--投稿一覧(各ユーザーの画像・本のタイトル・感想)-->
 <% @books.each do |book|%>
 <div>
     <%= link_to post_image_path(post_image.id) do %>
         <%= image_tag psot.get_iamge %>
     <% end %>
-    <p>User image: <%= image_tag psot_user.user.get_profile_image(100, 100)%></p>
+    <p>ユーザー画像: <%= image_tag psot_user.user.get_profile_image(100, 100)%></p>
     <p>Title: <%= psot_image.book_name %></p>
     <p>Opinion: <%= post_image.caption %> </p>
     

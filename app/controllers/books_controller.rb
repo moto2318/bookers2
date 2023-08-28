@@ -2,11 +2,14 @@ class BooksController < ApplicationController
   def new
   end
 
-  def crate
+  def create
     @book = Book.new(book_params)
     @book.user.id = current_user.id
-    @book.save
-    redirect_to '/book'
+    if @book.save
+      redirect_to '/book'
+    else
+      render :index
+    end
   end
 
   def index
@@ -17,18 +20,31 @@ class BooksController < ApplicationController
   end
   
   def edit
+    is_matching_login_user
     @book = Book.find(params[:id])
+    
   end
   
   def update
+    is_matching_login_user
     book = Book.find(params[:id])
-    book.update(list_params)
+    if book.update(list_params)
     redirect_to book_path(book.id)
+    else
+    render :edit_book
+    end
   end
   
   private
   def book_params
-    params.require(:list).permit(:title, :body, :image)
+    params.require(:book).permit(:title, :body, :image)
+  end
+  
+  def is_matching_login_user
+    book = Book.find(params[:id])
+    unless book.id == current_user.id
+      redirect_to post_images_path
+    end
   end
   
 end
