@@ -1,21 +1,22 @@
-<% post_images.each do |psot_image|%>
-
 <!--プロフィール-->
 <h1>ユーザーの詳細(User info)</h1>
 <div>
-  <%= link_to post_image_path(psot_image.id) do %>
-    <%= image_tag post_iamge.get_iamge%>
+    <%= image_tag user.get_profile_image(100, 100)%>
+    <tab>"name"</tab>
+  <h3><%= user.name %></h3>
+  <tab>"introduction"</tab>
+  <p> <%= user.introduction %></p>
+
+  <% if user == current_user %>
+  <p><%= link_to "ここにはユーザーアイコンが入る", edit_user_path(user)%></p>
   <% end %>
-  <h3><%= @user.name %></h3>
-  <%= image_tag post.user.get_profile_image(100, 100)%>
-  
-  <% if @user == current_user %>
-  <p><%= link_to "ここにはユーザーアイコンが入る", edit_user_path(@user)%></p>
 </div>
+  
 
 <%# @post_images.each do |post_image|%>
 <!--新規投稿-->
-<% form_with model: @book, url: '/books', method: :post do |f| %>
+<h4>New </h4>
+<%= form_with model: book do |f| %>
   <h4>Title</h4>
   <%= f.text_field :title %>
 	
