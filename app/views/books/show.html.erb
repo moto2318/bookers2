@@ -1,26 +1,61 @@
+
 <% if @book_id.errors.any? %>
-  <%= @book_id.errors.count %>errors prohibited this obj from being saved:
+  <%= @book_id.errors.count %> errors prohibited this obj from being saved:
   <ul>
     <% @book_id.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
   </ul>
 <% end %>
-<%= render 'post_image/user', user: current_user, book: Book.new %>
 
 
-<!--Bookの詳細画面(ユーザー画像・名前・本のタイトル[リンク付き]・感想)-->
-<h4>Books</h4>
-<div>
-  <p>User image: <%= image_tag @book.user.get_profile_image(100, 100)%></p>
-  <p>User name: <%= @book.user.name %></p>
-  <p>Title: <%= @book.title %></p>
-  <p>Opinion: <%= @book.body %></p>
 
-  <!--現在ログインしているユーザーと同じである場合のeditとdestro-->
-  <% if @book.user == current_user %>
-    <%= link_to "Edit", edit_book_path(@book), class: "edit-link" %>
-    |
-    <%= link_to "Destroy", book_path(@book), method: :delete%>
-  <% end %>
-</div>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <%= render 'post_image/user',  user: @book.user , book: Book.new %>
+      </div>
+
+      <!-- Bookの詳細画面(ユーザー画像・名前・本のタイトル[リンク付き]・感想) -->
+      <div
+    <div class="col-md-8 offset-md-1">
+        <h2>Book detail</h2>
+
+          <table class="table">
+            <tbody>
+            <tr>
+              <td>
+                <%= link_to user_path(@book.user) do %>
+                 <%= image_tag @book.user.get_profile_image(100, 100) %><br>
+                 <%= @book.user.name %>
+                <% end %>
+              </td>
+
+              <td>
+                <%=link_to book_path(@book.user) do %>
+                <%= @book.title %>
+                <% end %>
+                </td>
+
+              <td><%= @book.body %></td>
+
+              <% if @book.user == current_user %>
+                <td>
+                  <%= link_to "Edit", edit_book_path(@book.id), class: "btn btn-sm btn-success" %>
+                </td>
+
+                <td>
+                  <%= link_to "Destroy", book_path(@book.id), class: "btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に削しますか？" %>
+                </td>
+              <% end %>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</main>
